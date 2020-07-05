@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   lot.associate = function(models) {
     lot.hasMany(models.entry);
     lot.belongsToMany(models.user, { through: "userlot" });
-    lot.belongsTo(models.user, { as: "createdLot", constraints: false });
+    lot.belongsTo(models.user, { as: "author", constraints: false });
   };
 
   return lot;

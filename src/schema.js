@@ -47,6 +47,7 @@ module.exports = gql`
     type: Int!
     lot: Lot
     author: User
+    comments: [Comment!]!
   }
 
   type Lot {
@@ -55,6 +56,8 @@ module.exports = gql`
     description: String
     code: String!
     author: User
+    users: [User!]!
+    entries: [Entry!]!
   }
 
   type User {

@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
 
   user.associate = function(models) {
     user.belongsToMany(models.lot, { through: "userlots" });
-    user.hasMany(models.lot, {as: "author", constraints: false, allowNull: true, defaultValue: null });
+    user.hasMany(models.lot, {as: "createdLots", constraints: false, allowNull: true, defaultValue: null });
     user.hasMany(models.comment);
     user.hasMany(models.entry);
   };

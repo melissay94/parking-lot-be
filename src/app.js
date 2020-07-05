@@ -19,7 +19,7 @@ const UserMutation = require('./resolvers/UserMutation');
 const app = express();
 const port = process.env.PORT || 4000;
 
-app.use(cors);
+app.use(cors());
 
 const authenticate = (req, res, next) => {
   const authHeader = req.headers["authorization"];
