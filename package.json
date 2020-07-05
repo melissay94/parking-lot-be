@@ -1,0 +1,33 @@
+{
+  "name": "parking-lot-be",
+  "version": "1.0.0",
+  "description": "A backend for a questions parking lot app for online classes",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melissay94/parking-lot-be.git"
+  },
+  "author": "Melissa Young",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/melissay94/parking-lot-be/issues"
+  },
+  "homepage": "https://github.com/melissay94/parking-lot-be#readme",
+  "dependencies": {
+    "apollo-server-express": "^2.15.1",
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "dataloader-sequelize": "^2.1.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "graphql": "^15.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.2.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.0"
+  }
+}
