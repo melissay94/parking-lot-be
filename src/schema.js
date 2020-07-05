@@ -2,7 +2,7 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
   type Query {
-    currrentUser: User
+    currentUser: User
     lot(id: Int!): Lot
     lots: [Lot!]!
     entry(id: Int!): Entry

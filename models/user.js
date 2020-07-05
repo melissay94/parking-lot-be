@@ -1,22 +1,8 @@
 'use strict';
-const { Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
-  class user extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      user.belongsToMany(models.lot, { through: "userlots" });
-      user.hasMany(models.lot, {as: "author", constraints: false, allowNull: true, defaultValue: null });
-      user.hasMany(models.comment);
-      user.hasMany(models.entry);
-    }
-  };
-  user.init({
+  const user = sequelize.define('user', {
     name: { 
       type: DataTypes.STRING,
       validate: {
@@ -49,8 +35,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     role: DataTypes.INTEGER
   }, {
-    sequelize,
-    modelName: 'user',
     hooks: {
       beforeCreate: (createdUser, options) => {
         if (createdUser && createdUser.password) {
@@ -67,6 +51,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
+  user.associate = function(models) {
+    user.belongsToMany(models.lot, { through: "userlots" });
+    user.hasMany(models.lot, {as: "author", constraints: false, allowNull: true, defaultValue: null });
+    user.hasMany(models.comment);
+    user.hasMany(models.entry);
+  };
+
   user.prototype.validPassword = function(passwordTyped) {
     return bcrypt.compareSync(passwordTyped, this.password);
   }
@@ -78,4 +69,4 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   return user;
-};
+}

@@ -1,22 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class lot extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-      lot.hasMany(models.entry);
-      lot.belongsToMany(models.user, { through: "userlot" });
-      lot.belongsTo(models.user, { as: "createdLot", constraints: false });
-    }
-  };
-  lot.init({
+  const lot = sequelize.define('lot', {
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -43,9 +28,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     authorId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'lot',
-  });
+  }, {});
+
+  lot.associate = function(models) {
+    lot.hasMany(models.entry);
+    lot.belongsToMany(models.user, { through: "userlot" });
+    lot.belongsTo(models.user, { as: "createdLot", constraints: false });
+  };
+
   return lot;
-};
+}

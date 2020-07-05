@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -72,5 +72,5 @@ models.sequelize.authenticate();
 models.sequelize.sync();
 
 app.listen({ port }, () => {
-  console.log(`We're all mad here on port ${port}: ${server.graphqlPath}`);
+  console.log(`We're all mad here on port ${port}${server.graphqlPath}`);
 });

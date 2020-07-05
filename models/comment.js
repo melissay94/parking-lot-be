@@ -1,21 +1,7 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+
 module.exports = (sequelize, DataTypes) => {
-  class comment extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-      comment.belongsTo(models.user);
-      comment.belongsTo(models.entry);
-    }
-  };
-  comment.init({
+  const comment = sequelize.define('comment', {
     text: {
       type: DataTypes.STRING,
       validate: {
@@ -23,12 +9,16 @@ module.exports = (sequelize, DataTypes) => {
           args: [1, 1000],
           msg: "Invalid comment length. Must be between 1 and 1000 characters."
         }
-      }},
-    entryId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'comment',
-  });
+      }
+    },
+    userId: DataTypes.INTEGER,
+    entryId: DataTypes.INTEGER
+  }, {});
+
+  comment.associate = function(models) {
+    comment.belongsTo(models.user);
+    comment.belongsTo(models.entry);
+  };
+
   return comment;
-};
+}
