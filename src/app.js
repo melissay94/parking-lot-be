@@ -39,7 +39,7 @@ const authenticate = (req, res, next) => {
   });
 }
 
-app.user(authenticate);
+app.use(authenticate);
 
 const resolvers = {
   Query,
