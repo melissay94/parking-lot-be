@@ -13,7 +13,21 @@ async function currentUser(root, args, { currentUser, models }) {
   }
 }
 
-async function lots(root, args, { currentUser, models }) {
+async function lot(root, { id }, { models }) {
+  const lot = await models.lot.findOne({
+    where: {
+      id
+    }
+  });
+
+  if (!lot) {
+    throw new Error("Lot not found");
+  }
+
+  return lot;
+}
+
+async function lots(root, args, { models }) {
 
   const lots = await models.lot.findAll();
 
