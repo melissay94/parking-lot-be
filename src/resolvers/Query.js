@@ -34,7 +34,33 @@ async function lots(root, args, { models }) {
   return lots ? lots : [];
 }
 
+async function entry(root, { id }, { models }) {
+
+  const entry = await models.entry.findOne({
+    where: {
+      id
+    }
+  });
+
+  if (!entry) {
+    throw new Error("Entry not found");
+  }
+
+  return entry;
+}
+
+async function entries(root, args, { models }) {
+  
+  const entries = await models.entry.findAll();
+
+  return entries ? entries : [];
+}
+
 module.exports = {
   currentUser,
-  lots
+  lot,
+  lots,
+  entry,
+  entries,
+  
 }
