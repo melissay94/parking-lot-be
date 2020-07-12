@@ -31,6 +31,7 @@ const authenticate = (req, res, next) => {
 
   jwt.verify(token, process.env.APP_SECRET, (err, user) => {
     if (err) {
+      console.log(err);
       res.sendStatus(403);
     }
 

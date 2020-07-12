@@ -16,6 +16,7 @@ module.exports = gql`
     login(email: String!, password: String!): AuthPayload
     editCurrentUser(name: String, email: String): AuthPayload
     editCurrentPassword(password: String!, newPassword: String!): AuthPayload
+    deleteUser(password: String!): Boolean
     createLot(name: String!, description: String): Lot
     joinLot(id: Int!, code: String!): Boolean
     editLot(id:Int!, name: String, description: String): Lot
