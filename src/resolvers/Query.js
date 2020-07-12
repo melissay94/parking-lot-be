@@ -56,11 +56,32 @@ async function entries(root, args, { models }) {
   return entries ? entries : [];
 }
 
+async function comment(root, { id }, { models }) {
+  const comment = await models.comment.findOne({
+    where: {
+      id
+    }
+  });
+
+  if (!comment) {
+    throw new Error("Comment not found");
+  }
+
+  return comment;
+}
+
+async function comments(root, args, { models }) {
+  const comments = await models.comment.findAll();
+
+  return comments ? comments : [];
+}
+
 module.exports = {
   currentUser,
   lot,
   lots,
   entry,
   entries,
-  
+  comment,
+  comments
 }
