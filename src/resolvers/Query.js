@@ -13,6 +13,14 @@ async function currentUser(root, args, { currentUser, models }) {
   }
 }
 
+async function lots(root, args, { currentUser, models }) {
+
+  const lots = await models.lot.findAll();
+
+  return lots ? lots : [];
+}
+
 module.exports = {
   currentUser,
+  lots
 }
