@@ -12,7 +12,7 @@ module.exports = gql`
   }
 
   type Mutation {
-    signup(name: String, email: String!, password: String!): AuthPayload
+    signup(name: String, email: String!, password: String!, role: Int!): AuthPayload
     login(email: String!, password: String!): AuthPayload
     editCurrentUser(name: String, email: String): AuthPayload
     editCurrentPassword(password: String!, newPassword: String!): AuthPayload

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-async function signup(root, { name, email, password }, { models }) {
+async function signup(root, { name, email, password, role }, { models }) {
   const [user, createdUser] = await models.user.findOrCreate({
     where: {
       email: email
@@ -9,7 +9,8 @@ async function signup(root, { name, email, password }, { models }) {
     defaults: {
       email,
       password,
-      name
+      name,
+      role
     }
   });
 
