@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+const setExpiration = () => 60 * 60 * 24;
+
 async function signup(root, { name, email, password, role }, { models }) {
   const [user, createdUser] = await models.user.findOrCreate({
     where: {
@@ -22,11 +24,14 @@ async function signup(root, { name, email, password, role }, { models }) {
     throw new Error('Error, unable to create new user');
   }
 
-  const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET, { expiresIn: `${60 * 60 * 24}s`});
+  const expires = setExpiration();
+  const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET, { expiresIn: `${expires}s`});
+  today.setSeconds(today.getSeconds() + expires);
 
   return {
-    token,
-    user
+    user,
+    expires: today.getTime(),
+    token
   }
 }
 
@@ -49,11 +54,15 @@ async function login(root, { email, password }, { currentUser, models }) {
   if (!user.validPassword(password)) {
     throw new Error('Invalid password. Please try again.')
   }
-
-  const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET, { expiresIn: `${60 * 60 * 24}s`});
+  
+  const expires = setExpiration();
+  const today = new Date();
+  const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET, { expiresIn: `${expires}s`});
+  today.setSeconds(today.getSeconds() + expires);
 
   return {
-    user, 
+    user,
+    expires: today.getTime(),
     token
   }
 }
@@ -78,12 +87,15 @@ async function editCurrentUser(root, { name, email }, { currentUser, models }) {
   if (!updatedUser) {
     throw new Error(`${user.email} could not be updated.`);
   }
-
-  const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET, { expiresIn: `${60 * 60 * 24}s`});
+  
+  const expires = setExpiration();
+  const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET, { expiresIn: `${expires}s`});
+  today.setSeconds(today.getSeconds() + expires);
 
   return {
-    token,
-    user: updatedUser
+    user,
+    expires: today.getTime(),
+    token
   }
 }
 
@@ -99,8 +111,6 @@ async function editCurrentPassword(root, { password, newPassword }, { currentUse
     throw new Error("Could not find user.");
   }
 
-  console.log(user.validPassword);
-
   if (!user.validPassword(password)) {
     throw new Error("Invalid password entered.");
   }
@@ -112,12 +122,15 @@ async function editCurrentPassword(root, { password, newPassword }, { currentUse
   if (!updatedUser) {
     throw new Error(`${user.email}'s password could not be updated`);
   }
-
-  const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET, { expiresIn: `${60 * 60 * 24}s`});
+  
+  const expires = setExpiration();
+  const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET, { expiresIn: `${expires}s`});
+  today.setSeconds(today.getSeconds() + expires);
 
   return {
-    token,
-    user: updatedUser
+    user,
+    expires: today.getTime(),
+    token
   }
 }
 

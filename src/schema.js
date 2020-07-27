@@ -31,6 +31,7 @@ module.exports = gql`
 
   type AuthPayload {
     token: String
+    expires: String
     user: User
   }
 
